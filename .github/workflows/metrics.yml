@@ -1,10 +1,7 @@
 name: Metrics
 on:
-  # Schedule daily updates at midnight
   schedule: [{cron: "0 0 * * *"}]
-  # Allow manual workflow runs
   workflow_dispatch:
-  # Run on every push to the main branch
   push: {branches: ["master", "main"]}
 
 jobs:
@@ -15,18 +12,26 @@ jobs:
     steps:
       - uses: lowlighter/metrics@latest
         with:
-          # Your GitHub token
           token: ${{ secrets.METRICS_TOKEN }}
-
-          # Options
-          user: Formless-Coder # Replace with your actual username
+          user: Formless-Coder
           template: classic
           base: header, activity, community, repositories, metadata
-          config_timezone: Asia/Kolkata # Adjust if needed
+          config_timezone: Asia/Kolkata
           
-          # Plugins (Example: Isometric calendar and Languages)
+          # Plugins 
           plugin_isocalendar: yes
           plugin_isocalendar_duration: half-year
-          plugin_languages: yes
-          plugin_languages_ignored: html, css
-          plugin_languages_limit: 8
+          plugin_languages: no
+          
+          # Add lines of code tracking
+          plugin_lines: yes
+          plugin_lines_history_limit: 1
+          plugin_lines_repositories_limit: 4
+          plugin_lines_sections: base
+
+          # Add coding habits
+          plugin_habits: yes
+          plugin_habits_from: 200
+          plugin_habits_days: 14
+          plugin_habits_facts: yes
+          plugin_habits_charts: yes
